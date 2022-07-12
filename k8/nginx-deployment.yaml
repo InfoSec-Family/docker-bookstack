@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: bookstack
+  annotations: []
+  labels:
+    service: nginx
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: nginx
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations: []
+      labels:
+        service: nginx
+    spec:
+      containers:
+        - env:
+            - name: PGID
+              value: "1000"
+            - name: PUID
+              value: "1000"
+            - name: TZ
+              value: Europe/London
+          image: linuxserver/nginx
+          name: nginx
+          ports:
+            - containerPort: 80
+            - containerPort: 443
+          resources: {}
+          volumeMounts:
+            - mountPath: /config
+              name: nginx-claim0
+      restartPolicy: Always
+      volumes:
+        - name: nginx-claim0
+          persistentVolumeClaim:
+            claimName: nginx-claim0

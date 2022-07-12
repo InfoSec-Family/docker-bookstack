@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: bookstack
+  annotations: []
+  labels:
+    service: heimdall
+  name: heimdall
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: heimdall
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations: []
+      labels:
+        service: heimdall
+    spec:
+      containers:
+        - env:
+            - name: PGID
+              value: "1000"
+            - name: PUID
+              value: "1000"
+            - name: TZ
+              value: Europe/London
+          image: linuxserver/heimdall
+          name: heimdall
+          ports:
+            - containerPort: 80
+            - containerPort: 443
+          resources: {}
+          volumeMounts:
+            - mountPath: /config
+              name: heimdall-claim0
+      restartPolicy: Always
+      volumes:
+        - name: heimdall-claim0
+          persistentVolumeClaim:
+            claimName: heimdall-claim0

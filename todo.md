@@ -1,0 +1,6 @@
+- [] add nginx as ingress class
+- [] attach bookstack to nginx class
+- [] add in certmanager
+- [] add in cloudflare issuer
+- [] update ports to appropriate values and remove need for privilege
+- [] add app url

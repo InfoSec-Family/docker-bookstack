@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: bookstack
+  annotations: []
+  labels:
+    service: mariadb
+  name: mariadb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: mariadb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations: []
+      labels:
+        service: mariadb
+    spec:
+      containers:
+        - env:
+            - name: MYSQL_DATABASE
+              value: bookstackapp
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-secret
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-secret
+                  key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-secret
+                  key: MYSQL_PASSWORD
+            - name: PGID
+              value: "1000"
+            - name: PUID
+              value: "1000"
+            - name: TZ
+              value: Europe/London
+          image: linuxserver/mariadb
+          name: bookstack-db
+          ports:
+            - containerPort: 3306
+          resources: {}
+          volumeMounts:
+            - mountPath: /config
+              name: mariadb-claim0
+      restartPolicy: Always
+      volumes:
+        - name: mariadb-claim0
+          persistentVolumeClaim:
+            claimName: mariadb-claim0
+        - name: mariadb-secret
+          secret:
+            secretName: mariadb-secret

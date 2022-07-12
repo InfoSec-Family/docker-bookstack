@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: bookstack
+  annotations: []
+  labels:
+    service: bookstack
+  name: bookstack
+spec:
+  ports:
+    - name: "6875"
+      port: 6875
+      targetPort: 80
+  selector:
+    service: bookstack
