@@ -2,10 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: bookstack
-  annotations: []
   labels:
     service: mariadb
-  name: mariadb
+  name: bookstackdb
 spec:
   replicas: 1
   selector:
@@ -15,7 +14,6 @@ spec:
     type: Recreate
   template:
     metadata:
-      annotations: []
       labels:
         service: mariadb
     spec:
