@@ -4,7 +4,7 @@ metadata:
   namespace: bookstack
   labels:
     service: mariadb
-  name: mariadb
+  name: bookstackdb
 spec:
   type: ClusterIP
   ports:
