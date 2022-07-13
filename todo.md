@@ -4,3 +4,4 @@
 - [] add in cloudflare issuer
 - [] update ports to appropriate values and remove need for privilege
 - [] add app url
+- [] add in delays for bookstack pod

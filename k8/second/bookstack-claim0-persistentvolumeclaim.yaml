@@ -3,9 +3,10 @@ kind: PersistentVolumeClaim
 metadata:
   namespace: bookstack
   labels:
-    service: mariadb-claim0
-  name: mariadb-claim0
+    service: bookstack-claim0
+  name: bookstack-claim0
 spec:
+  storageClassName: local-path
   accessModes:
     - ReadWriteOnce
   resources:
